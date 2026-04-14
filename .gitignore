@@ -1,0 +1,21 @@
+# bytecode
+*.beam
+*.hrl.gch
+*.app
+*.app.src
+# elixir
+.elixir_ls/
+
+# Erlang Crash Dumps
+erl_crash.dump
+# logs
+*.log
+# test
+_build/test/lib/*/ebin/*.html
+_build/test/lib/*/ebin/*.css
+_build/test/lib/*/ebin/*.js
+.eunit/
+
+# system files
+*.swp
+*~

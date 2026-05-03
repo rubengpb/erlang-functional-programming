@@ -1,5 +1,5 @@
 -module(high_order).
--export([all/2, foldr/3, foldl/3, filter/2, map/2, increment1/1, increment2/1, increment3/1, doble_list/1, abs_list/1, tree/2, fold/3, sum/1, find/2]).
+-export([all/2, foldr/3, foldl/3, filter/2, map/2, increment1/1, increment2/1, increment3/1, doble_list/1, abs_list/1, tree/2, fold/3, sum/1, find/2, tree_map/2, fold_map/3, sum_map/1, find_map/2]).
 
 % all(F,L)
 all(_,[]) -> true;
@@ -55,6 +55,27 @@ find(P, {node, N, L, R}) ->
     true -> {ok, N};
     _ ->
       case {find(P, L), find(P, R)} of
+        {{ok,V},_} -> {ok, V};
+        {_,{ok,V}} -> {ok, V};
+        _ -> false
+      end
+  end.
+
+tree_map(_, void) -> void;
+tree_map(F, #{value := V, left := L, right := R}) ->
+  #{value => F(V), left => tree_map(F, L), right => tree_map(F, R)}.
+
+fold_map(_, Acc, void) -> Acc;
+fold_map(F, Acc, #{value := V, left := L, right := R}) -> F(V, fold_map(F, Acc, L), fold_map(F, Acc, R)).
+
+sum_map(T) -> fold_map(fun (X,Y,Z) -> X + Y + Z end, 0, T).
+
+find_map(_, void) -> false;
+find_map(P, #{value := N, left := L, right := R}) ->
+  case P(N) of
+    true -> {ok, N};
+    _ ->
+      case {find_map(P, L), find_map(P, R)} of
         {{ok,V},_} -> {ok, V};
         {_,{ok,V}} -> {ok, V};
         _ -> false

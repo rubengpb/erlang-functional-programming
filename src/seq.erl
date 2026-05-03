@@ -32,6 +32,8 @@ insert(I, [X|Xs]) -> [X|insert(I,Xs)].
 
 % Exercise 3
 sort(L) -> insert_sort(L, []).
+% sort([]) -> [];
+% sort([X|Xs]) -> insert(X, sort(Xs)).
 
 insert_sort([], L) -> L;
 insert_sort([X|Xs], L) -> insert_sort(Xs, insert(X,L)).

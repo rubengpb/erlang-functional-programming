@@ -1,4 +1,4 @@
--module(utils).
+-module(seq).
 -export([fib/1, sum/1, member/2, insert/2, sort/1, fib_with_index/1, keyfind/2, merge/2]).
 
 % Exercise 0
